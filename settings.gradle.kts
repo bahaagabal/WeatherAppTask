@@ -21,6 +21,10 @@ dependencyResolutionManagement {
 
 rootProject.name = "WeatherAppTask"
 include(":app")
-include(":core")
 include(":data")
-include(":mylibrary")
+include(":core")
+include(":features")
+include(":weatherUtils")
+include(":features:cityInput")
+include(":features:currentWeather")
+include(":features:forecast")
