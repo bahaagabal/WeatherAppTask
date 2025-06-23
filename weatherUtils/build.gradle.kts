@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-  //  id("maven-publish")
+    id("maven-publish")
 }
 
 android {
@@ -33,7 +33,7 @@ android {
     }
 }
 
-/*publishing {
+publishing {
     publications {
         create<MavenPublication>("release") {
             afterEvaluate {
@@ -42,14 +42,14 @@ android {
 
             groupId = "com.bahaa.weather"
             artifactId = "weatherutils"
-            version = "1.0.0"
+            version = "1.1.0"
         }
     }
 
     repositories {
         mavenLocal()
     }
-}*/
+}
 
 
 dependencies {
