@@ -6,6 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -16,10 +17,17 @@ private const val BASE_URL = "https://api.openweathermap.org/data/2.5/"
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    @Provides
+    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
+        return HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+    }
 
     @Provides
     @Singleton
-    fun providesHttpClient() = OkHttpClient.Builder()
+    fun providesHttpClient(loggingInterceptor: HttpLoggingInterceptor) = OkHttpClient.Builder()
+        .addInterceptor(loggingInterceptor)
         .build()
 
     @Provides

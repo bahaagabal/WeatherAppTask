@@ -59,4 +59,5 @@ dependencies {
     testImplementation (libs.junit.jupiter)
     testImplementation (libs.androidx.datastore.preferences.v100)
     testImplementation (libs.kotlinx.coroutines.test)
+    implementation(libs.logging.interceptor)
 }

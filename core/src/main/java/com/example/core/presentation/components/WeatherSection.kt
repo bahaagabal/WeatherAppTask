@@ -36,7 +36,7 @@ fun WeatherSection(weather: CurrentWeather) {
             painter = rememberAsyncImagePainter(model = weather.iconUrl),
             contentDescription = stringResource(R.string.core_weather_icon),
             modifier = Modifier
-                .size(80.dp)
+                .size(120.dp)
                 .align(Alignment.CenterHorizontally)
         )
 

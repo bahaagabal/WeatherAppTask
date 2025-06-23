@@ -20,6 +20,5 @@ interface WeatherApiService {
         @Query("q") city: String,
         @Query("cnt") count: Int = 7,
         @Query("appid") apiKey: String,
-        @Query("units") units: String = "metric"
     ): Response<ForecastDto>
 }

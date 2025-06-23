@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -25,7 +26,6 @@ fun CurrentWeatherRootScreen(
     viewModel: CurrentWeatherViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.observeAsState()
-
     LaunchedEffect(city) {
         if (city.isNotBlank()) {
             viewModel.loadCurrentWeather(city)
@@ -39,7 +39,12 @@ fun CurrentWeatherRootScreen(
 
 @Composable
 fun CurrentWeatherScreen(uiState: CurrentWeatherUiState?) {
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         when {
             uiState?.isLoading == true -> {
                 CircularProgressIndicator()
@@ -53,8 +58,6 @@ fun CurrentWeatherScreen(uiState: CurrentWeatherUiState?) {
                 Text(
                     text = uiState.error,
                     color = Color.Red,
-                    modifier = Modifier
-                        .fillMaxWidth()
                 )
             }
         }

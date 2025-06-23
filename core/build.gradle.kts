@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.hilt)
     kotlin("kapt")
     id("jacoco")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -20,7 +21,7 @@ android {
         jvmTarget = "11"
     }
 
-    buildFeatures{
+    buildFeatures {
         compose = true
     }
 
@@ -66,8 +67,8 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     debugImplementation(libs.androidx.ui.tooling)
-    testImplementation (libs.mockk)
-    testImplementation (libs.kotlinx.coroutines.test)
-    testImplementation (libs.junit.jupiter)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.junit.jupiter)
 
 }
