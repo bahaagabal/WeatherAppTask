@@ -15,6 +15,8 @@ class RemoteDataSourceImpl @Inject constructor(
 ) : RemoteDataSource {
 
     companion object {
+        //TODO : to be moved to local.properties
+
         private const val API_KEY = "9a3049d2163081e844bed41d905b2c84"
     }
 
