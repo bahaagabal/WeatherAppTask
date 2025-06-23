@@ -88,6 +88,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.logging.interceptor)
+    implementation(libs.weather.utils)
 }
 
 val exclusions = listOf(
