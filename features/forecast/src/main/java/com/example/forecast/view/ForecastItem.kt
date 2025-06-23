@@ -1,6 +1,5 @@
 package com.example.forecast.view
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.core.domain.models.DailyForecast
-import com.example.core.utils.formatDayFromTimestamp
+import com.example.weatherutils.formatDayFromTimestamp
 
 @Composable
 fun ForecastItem(day: DailyForecast) {

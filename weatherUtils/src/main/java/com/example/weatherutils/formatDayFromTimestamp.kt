@@ -1,4 +1,4 @@
-package com.example.core.utils
+package com.example.weatherutils
 
 import java.text.SimpleDateFormat
 import java.util.*

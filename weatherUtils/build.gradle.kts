@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    id("maven-publish")
 }
 
 android {
@@ -29,6 +30,26 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+    }
+}
+
+project.afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                afterEvaluate {
+                    from(components["release"])
+                }
+
+                groupId = "com.example.weather"
+                artifactId = "weather-utils"
+                version = "1.0.0"
+            }
+        }
+
+        repositories {
+            mavenLocal()
+        }
     }
 }
 

@@ -1,10 +1,9 @@
-package com.example.core.utils
+package com.example.weatherutils
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-
-class DateUtilsTest {
+class FormatDayFromTimestampTest {
 
     @Test
     fun `formatDayFromTimestamp returns correct day abbreviation`() {

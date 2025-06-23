@@ -46,6 +46,7 @@ android {
     }
 }
 
+
 dependencies {
 
     implementation(project(":core"))
@@ -71,4 +72,5 @@ dependencies {
     testImplementation (libs.kotlinx.coroutines.test)
     testImplementation (libs.androidx.core.testing)
     testImplementation(libs.turbine)
+    implementation(libs.weather.utils)
 }

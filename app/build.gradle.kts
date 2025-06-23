@@ -62,7 +62,6 @@ android {
 dependencies {
     implementation(project(":core"))
     implementation(project(":data"))
-    implementation(project(":weatherUtils"))
 
     implementation(project(":features:cityInput"))
     implementation(project(":features:currentWeather"))

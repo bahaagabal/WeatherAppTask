@@ -14,6 +14,7 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        mavenLocal()
         google()
         mavenCentral()
     }
@@ -24,7 +25,7 @@ include(":app")
 include(":data")
 include(":core")
 include(":features")
-include(":weatherUtils")
 include(":features:cityInput")
 include(":features:currentWeather")
 include(":features:forecast")
+include(":weatherutils")

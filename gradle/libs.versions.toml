@@ -27,6 +27,7 @@ retrofit = "2.11.0"
 hilt = "2.51.1"
 runtimeLivedata = "1.8.3"
 turbine = "1.0.0"
+weatherUtils = "1.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -63,6 +64,7 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 gsonConverter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+weather-utils = { module = "com.example.weather:weather-utils", version.ref = "weatherUtils" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
