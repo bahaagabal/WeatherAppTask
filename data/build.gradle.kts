@@ -57,7 +57,7 @@ dependencies {
     testImplementation (libs.mockk)
     testImplementation (libs.kotlinx.coroutines.test)
     testImplementation (libs.junit.jupiter)
-    testImplementation (libs.androidx.datastore.preferences.v100)
+    testImplementation (libs.androidx.datastore.preferences)
     testImplementation (libs.kotlinx.coroutines.test)
     implementation(libs.logging.interceptor)
 }

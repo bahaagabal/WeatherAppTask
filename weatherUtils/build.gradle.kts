@@ -33,25 +33,24 @@ android {
     }
 }
 
-project.afterEvaluate {
-    publishing {
-        publications {
-            create<MavenPublication>("release") {
-                afterEvaluate {
-                    from(components["release"])
-                }
-
-                groupId = "com.example.weather"
-                artifactId = "weather-utils"
-                version = "1.0.0"
+publishing {
+    publications {
+        create<MavenPublication>("release") {
+            afterEvaluate {
+                from(components["release"])
             }
-        }
 
-        repositories {
-            mavenLocal()
+            groupId = "com.example.weather"
+            artifactId = "weatherutils"
+            version = "1.0.0"
         }
     }
+
+    repositories {
+        mavenLocal()
+    }
 }
+
 
 dependencies {
 
