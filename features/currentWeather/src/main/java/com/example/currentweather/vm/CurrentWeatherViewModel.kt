@@ -9,6 +9,7 @@ import com.example.core.domain.usecases.GetLastSearchedCityUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import com.example.core.domain.Result
+import com.example.core.presentation.toUiText
 import com.example.currentweather.model.CurrentWeatherUiState
 import kotlinx.coroutines.launch
 
@@ -52,7 +53,7 @@ class CurrentWeatherViewModel @Inject constructor(
 
                 is Result.Error -> {
                     _uiState.value = CurrentWeatherUiState(
-                        error = result.error.toString(),
+                        error = result.error.toUiText(),
                         isLoading = false
                     )
                 }

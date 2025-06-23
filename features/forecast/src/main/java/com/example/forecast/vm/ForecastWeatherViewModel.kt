@@ -11,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.example.core.domain.Result
+import com.example.core.presentation.toUiText
 
 @HiltViewModel
 class ForecastWeatherViewModel @Inject constructor(
@@ -59,7 +60,7 @@ class ForecastWeatherViewModel @Inject constructor(
 
                 is Result.Error -> {
                     uiState = ForecastWeatherUiState(
-                        error = result.error.toString(),
+                        error = result.error.toUiText(),
                         isLoading = false
                     )
                 }

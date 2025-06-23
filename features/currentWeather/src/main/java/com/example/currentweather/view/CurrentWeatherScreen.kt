@@ -56,7 +56,7 @@ fun CurrentWeatherScreen(uiState: CurrentWeatherUiState?) {
 
             uiState?.error != null -> {
                 Text(
-                    text = uiState.error,
+                    text = uiState.error.asString(),
                     color = Color.Red,
                 )
             }
