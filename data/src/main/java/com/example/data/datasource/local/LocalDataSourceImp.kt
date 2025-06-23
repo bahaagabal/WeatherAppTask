@@ -10,11 +10,12 @@ import kotlinx.coroutines.flow.first
 import java.io.IOException
 import javax.inject.Inject
 import  com.example.core.domain.Result
+import dagger.hilt.android.qualifiers.ApplicationContext
 
 private val Context.dataStore by preferencesDataStore(name = "weather_prefs")
 
 class LocalDataSourceImp @Inject constructor(
-    private val context: Context
+   @ApplicationContext private val context: Context
 ) : LocalDataSource {
 
     private val CITY_KEY = stringPreferencesKey("last_searched_city")
