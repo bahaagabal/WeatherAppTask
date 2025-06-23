@@ -15,7 +15,7 @@ class RemoteDataSourceImpl @Inject constructor(
 ) : RemoteDataSource {
 
     companion object {
-        private const val API_KEY = "YOUR_API_KEY_HERE"
+        private const val API_KEY = "9BTKN4JEESSQJFT6YYFHZYLBA"
     }
 
     override suspend fun getCurrentWeather(city: String): Result<CurrentWeatherDto, DataError.Remote> =
