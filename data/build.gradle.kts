@@ -57,5 +57,5 @@ dependencies {
     testImplementation (libs.kotlinx.coroutines.test)
     testImplementation (libs.junit.jupiter)
     testImplementation (libs.androidx.datastore.preferences.v100)
-    testImplementation (libs.kotlinx.coroutines.test.v173)
+    testImplementation (libs.kotlinx.coroutines.test)
 }
