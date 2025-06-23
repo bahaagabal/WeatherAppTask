@@ -62,6 +62,7 @@ android {
 dependencies {
     implementation(project(":core"))
     implementation(project(":data"))
+    implementation(project(":weatherutils"))
 
     implementation(project(":features:cityInput"))
     implementation(project(":features:currentWeather"))
@@ -126,7 +127,8 @@ android {
                 html.required.set(true)
             }
             sourceDirectories.setFrom(layout.projectDirectory.dir("src/main"))
-            classDirectories.setFrom(files(
+            classDirectories.setFrom(
+                files(
                 fileTree(layout.buildDirectory.dir("intermediates/javac/")) {
                     exclude(exclusions)
                 },
@@ -134,7 +136,8 @@ android {
                     exclude(exclusions)
                 }
             ))
-            executionData.setFrom(files(
+            executionData.setFrom(
+                files(
                 fileTree(layout.buildDirectory) { include(listOf("**/*.exec", "**/*.ec")) }
             ))
         }
