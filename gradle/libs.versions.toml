@@ -58,7 +58,7 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 gsonConverter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
-weather-utils = { module = "com.example.weather:weatherutils", version.ref = "weatherUtils" }
+weather-utils = { module = "com.bahaa.weather:weatherutils", version.ref = "weatherUtils" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
