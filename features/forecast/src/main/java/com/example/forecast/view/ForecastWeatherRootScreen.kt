@@ -10,11 +10,13 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.forecast.contract.ForecastWeatherIntent
 import com.example.forecast.contract.ForecastWeatherUiState
 import com.example.forecast.vm.ForecastWeatherViewModel
@@ -24,7 +26,7 @@ fun ForecastWeatherRootScreen(
     city: String,
     viewModel: ForecastWeatherViewModel = hiltViewModel()
 ) {
-    val state = viewModel.uiState
+    val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(city) {
         if (city.isNotBlank()) {

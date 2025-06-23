@@ -1,5 +1,6 @@
 package com.example.cityinput.view
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -7,8 +8,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -83,6 +86,21 @@ fun CityInputScreen(
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Search
             ),
+            trailingIcon = {
+                androidx.compose.animation.AnimatedVisibility(visible = city.isNotBlank()) {
+                    IconButton(
+                        onClick = { onCityChanged("") }
+                    ) {
+
+                        Icon(
+                            imageVector = Icons.Default.Close,
+                            contentDescription = stringResource(R.string.feature_city_input_close_hint),
+                            tint = MaterialTheme.colorScheme.surfaceTint.copy(alpha = 0.66f)
+                        )
+
+                    }
+                }
+            },
             keyboardActions = KeyboardActions(
                 onSearch = {
                     if (city.isNotBlank()) {

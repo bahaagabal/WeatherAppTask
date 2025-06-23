@@ -11,5 +11,5 @@ data class ForecastWeatherUiState(
 
 sealed class ForecastWeatherIntent {
     data class LoadForecast(val city: String) : ForecastWeatherIntent()
-    object LoadSavedCityForecast : ForecastWeatherIntent()
+    data object LoadSavedCityForecast : ForecastWeatherIntent()
 }

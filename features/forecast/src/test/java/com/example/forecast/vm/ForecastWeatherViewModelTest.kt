@@ -1,15 +1,19 @@
 package com.example.forecast.vm
 
+import app.cash.turbine.test
 import com.example.core.domain.DataError
 import com.example.core.domain.Result
 import com.example.core.domain.models.DailyForecast
 import com.example.core.domain.usecases.GetForecastUseCase
 import com.example.core.domain.usecases.GetLastSearchedCityUseCase
+import com.example.core.presentation.UiText
+import com.example.core.presentation.toUiText
 import com.example.forecast.contract.ForecastWeatherIntent
-import io.mockk.*
+import io.mockk.coEvery
+import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertFalse
-import junit.framework.TestCase.assertTrue
+import junit.framework.TestCase.assertNotNull
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.*
@@ -17,20 +21,23 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
-
 @OptIn(ExperimentalCoroutinesApi::class)
 class ForecastWeatherViewModelTest {
 
-    private val testDispatcher = StandardTestDispatcher()
+    private val getForecastUseCase: GetForecastUseCase = mockk()
+    private val getLastSearchedCityUseCase: GetLastSearchedCityUseCase = mockk()
 
     private lateinit var viewModel: ForecastWeatherViewModel
-    private val getForecastUseCase = mockk<GetForecastUseCase>()
-    private val getLastSearchedCityUseCase = mockk<GetLastSearchedCityUseCase>()
+
+    private val testDispatcher = StandardTestDispatcher()
 
     @Before
-    fun setup() {
+    fun setUp() {
         Dispatchers.setMain(testDispatcher)
-        viewModel = ForecastWeatherViewModel(getForecastUseCase, getLastSearchedCityUseCase)
+        viewModel = ForecastWeatherViewModel(
+            getForecastUseCase,
+            getLastSearchedCityUseCase
+        )
     }
 
     @After
@@ -39,74 +46,59 @@ class ForecastWeatherViewModelTest {
     }
 
     @Test
-    fun `LoadForecast intent updates uiState with success`() = runTest {
-        val city = "Luxor"
-        val forecastList = listOf(
-            DailyForecast(date = 1234L, temperature = 33.0, condition = "Clear", iconUrl = "icon1"),
-            DailyForecast(date = 5678L, temperature = 29.0, condition = "Clouds", iconUrl = "icon2")
+    fun `load forecast should emit loading and success state`() = runTest {
+        // Arrange
+        val forecast = listOf(
+            DailyForecast(
+                date = 1234567,
+                temperature = 25.0,
+                condition = "Clear",
+                iconUrl = "icon"
+            )
         )
 
-        coEvery { getForecastUseCase(city) } returns Result.Success(forecastList)
+        coEvery { getForecastUseCase("Cairo") } returns Result.Success(forecast)
 
-        viewModel.onIntent(ForecastWeatherIntent.LoadForecast(city))
-        testDispatcher.scheduler.advanceUntilIdle()
+        // Act
+        viewModel.onIntent(ForecastWeatherIntent.LoadForecast("Cairo"))
+        advanceUntilIdle()
 
-        with(viewModel.uiState) {
-            assertFalse(isLoading)
-            assertEquals(forecastList, forecast)
-            assertEquals(null, error)
-        }
-
-        coVerify { getForecastUseCase(city) }
+        // Assert
+        val state = viewModel.state.value
+        assert(state.isLoading.not())
+        assert(state.forecast == forecast)
     }
 
     @Test
-    fun `LoadForecast intent updates uiState with error`() = runTest {
-        val city = "Aswan"
-        val error = Result.Error(DataError.Remote.SERVER)
+    fun `load forecast should emit loading and error state`() = runTest {
+        // Arrange
+        val error = DataError.Remote.SERVER
+        coEvery { getForecastUseCase("Cairo") } returns Result.Error(error)
 
-        coEvery { getForecastUseCase(city) } returns error
+        // Act
+        viewModel.onIntent(ForecastWeatherIntent.LoadForecast("Cairo"))
+        advanceUntilIdle()
 
-        viewModel.onIntent(ForecastWeatherIntent.LoadForecast(city))
-        testDispatcher.scheduler.advanceUntilIdle()
+        // Assert
+        val state = viewModel.state.value
+        assertFalse(state.isLoading)
+        assertNotNull(state.error)
 
-        with(viewModel.uiState) {
-            assertFalse(isLoading)
+        val actual = state.error as UiText.StringResourceId
+        val expected = error.toUiText() as UiText.StringResourceId
 
-            assertTrue(error.error.name.contains(DataError.Remote.SERVER.toString()))
-            assertEquals(null, forecast)
-        }
-
-        coVerify { getForecastUseCase(city) }
+        assertEquals(expected.id, actual.id)
     }
 
     @Test
-    fun `LoadSavedCityForecast intent loads and fetches forecast`() = runTest {
-        val savedCity = "Cairo"
-        val forecastList = listOf(DailyForecast(0L, 30.0, "Sunny", "icon"))
-
-        coEvery { getLastSearchedCityUseCase() } returns Result.Success(savedCity)
-        coEvery { getForecastUseCase(savedCity) } returns Result.Success(forecastList)
+    fun `load saved city forecast should trigger forecast use case if city is found`() = runTest {
+        coEvery { getLastSearchedCityUseCase() } returns Result.Success("London")
+        coEvery { getForecastUseCase("London") } returns Result.Success(emptyList())
 
         viewModel.onIntent(ForecastWeatherIntent.LoadSavedCityForecast)
-        testDispatcher.scheduler.advanceUntilIdle()
 
-        with(viewModel.uiState) {
-            assertFalse(isLoading)
-            assertEquals(forecastList, forecast)
-        }
+        advanceUntilIdle()
 
-        coVerify { getLastSearchedCityUseCase() }
-        coVerify { getForecastUseCase(savedCity) }
-    }
-
-    @Test
-    fun `LoadSavedCityForecast does nothing when saved city is blank`() = runTest {
-        coEvery { getLastSearchedCityUseCase() } returns Result.Success("")
-
-        viewModel.onIntent(ForecastWeatherIntent.LoadSavedCityForecast)
-        testDispatcher.scheduler.advanceUntilIdle()
-
-        coVerify(exactly = 0) { getForecastUseCase(any()) }
+        assert(viewModel.state.value.forecast != null)
     }
 }

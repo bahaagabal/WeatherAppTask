@@ -3,4 +3,5 @@
     <string name="feature_city_input_city_name" translatable="false">City name</string>
     <string name="feature_city_input_enter_your_city">Enter your city...</string>
     <string name="feature_city_input_search_weather">Search Weather</string>
+    <string name="feature_city_input_close_hint">Close</string>
 </resources>

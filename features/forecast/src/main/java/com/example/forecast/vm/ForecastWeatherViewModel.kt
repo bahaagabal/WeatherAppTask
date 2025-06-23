@@ -1,6 +1,5 @@
 package com.example.forecast.vm
 
-import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.domain.usecases.GetForecastUseCase
@@ -12,6 +11,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.example.core.domain.Result
 import com.example.core.presentation.toUiText
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 
 @HiltViewModel
 class ForecastWeatherViewModel @Inject constructor(
@@ -19,8 +21,8 @@ class ForecastWeatherViewModel @Inject constructor(
     private val getLastSearchedCityUseCase: GetLastSearchedCityUseCase
 ) : ViewModel() {
 
-    var uiState by mutableStateOf(ForecastWeatherUiState())
-        private set
+    private val _state = MutableStateFlow(ForecastWeatherUiState())
+    val state = _state.asStateFlow()
 
     fun onIntent(intent: ForecastWeatherIntent) {
         when (intent) {
@@ -47,22 +49,30 @@ class ForecastWeatherViewModel @Inject constructor(
     }
 
     private fun loadForecast(city: String) {
-        uiState = uiState.copy(isLoading = true)
+        _state.update {
+            it.copy(
+                isLoading = true
+            )
+        }
 
         viewModelScope.launch {
             when (val result = get7DaysForecastUseCase(city)) {
                 is Result.Success -> {
-                    uiState = ForecastWeatherUiState(
-                        forecast = result.data,
-                        isLoading = false
-                    )
+                    _state.update {
+                        it.copy(
+                            forecast = result.data,
+                            isLoading = false
+                        )
+                    }
                 }
 
                 is Result.Error -> {
-                    uiState = ForecastWeatherUiState(
-                        error = result.error.toUiText(),
-                        isLoading = false
-                    )
+                    _state.update {
+                        it.copy(
+                            error = result.error.toUiText(),
+                            isLoading = false
+                        )
+                    }
                 }
             }
         }
