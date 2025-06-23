@@ -8,6 +8,6 @@ import com.example.core.domain.Result
 interface WeatherRepository {
     suspend fun getCurrentWeather(city: String): Result<CurrentWeather, DataError.Remote>
     suspend fun get7DayForecast(city: String): Result<List<DailyForecast>, DataError.Remote>
-    suspend fun saveLastSearchedCity(city: String)
-    suspend fun getLastSearchedCity(): String?
+    suspend fun saveLastSearchedCity(city: String): Result<Unit, DataError.Local>
+    suspend fun getLastSearchedCity(): Result<String?, DataError.Local>
 }

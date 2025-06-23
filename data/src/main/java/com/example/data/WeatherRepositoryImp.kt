@@ -31,11 +31,11 @@ class WeatherRepositoryImp @Inject constructor(
         }
     }
 
-    override suspend fun saveLastSearchedCity(city: String) {
-        localDataSource.saveLastSearchedCity(city)
+    override suspend fun saveLastSearchedCity(city: String): Result<Unit, DataError.Local> {
+        return localDataSource.saveLastSearchedCity(city)
     }
 
-    override suspend fun getLastSearchedCity(): String? {
+    override suspend fun getLastSearchedCity(): Result<String?, DataError.Local> {
         return localDataSource.getLastSearchedCity()
     }
 }
