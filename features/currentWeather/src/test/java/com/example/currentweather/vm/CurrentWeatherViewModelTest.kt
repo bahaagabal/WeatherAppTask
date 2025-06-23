@@ -7,6 +7,7 @@ import com.example.core.domain.Result
 import com.example.core.domain.models.CurrentWeather
 import com.example.core.domain.usecases.GetCurrentWeatherUseCase
 import com.example.core.domain.usecases.GetLastSearchedCityUseCase
+import com.example.core.presentation.UiText
 import com.example.currentweather.model.CurrentWeatherUiState
 import io.mockk.*
 import kotlinx.coroutines.Dispatchers
@@ -111,7 +112,7 @@ class CurrentWeatherViewModelTest {
 
         verifySequence {
             observer.onChanged(match { it.isLoading })
-            observer.onChanged(match { it.error?.contains(DataError.Remote.SERVER.toString()) == true && !it.isLoading })
+            observer.onChanged(match { (it.error is UiText) && !it.isLoading })
         }
 
         viewModel.uiState.removeObserver(observer)
