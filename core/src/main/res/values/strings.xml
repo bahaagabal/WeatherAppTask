@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="core_current_weather">Current Weather</string>
+    <string name="core_weather_icon">Weather Icon</string>
+    <string name="core_temperature">Temperature</string>
+    <string name="core_condition">Condition</string>
+</resources>
