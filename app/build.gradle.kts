@@ -62,7 +62,6 @@ android {
 dependencies {
     implementation(project(":core"))
     implementation(project(":data"))
-    implementation(project(":weatherutils"))
 
     implementation(project(":features:cityInput"))
     implementation(project(":features:currentWeather"))
@@ -89,7 +88,6 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.logging.interceptor)
-    implementation(libs.weather.utils)
 }
 
 val exclusions = listOf(
