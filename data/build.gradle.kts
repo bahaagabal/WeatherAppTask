@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.hilt)
     kotlin("kapt")
     alias(libs.plugins.kotlin.serialization)
+    id("jacoco")
 }
 
 hilt {

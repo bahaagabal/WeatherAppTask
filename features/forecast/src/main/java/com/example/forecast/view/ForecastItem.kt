@@ -16,14 +16,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.core.domain.models.DailyForecast
+import com.example.core.utils.formatDayFromTimestamp
 
 @Composable
 fun ForecastItem(day: DailyForecast) {
-    val formattedDate = remember(day.date) {
-        java.text.SimpleDateFormat("EEE, d MMM", java.util.Locale.getDefault())
-            .format(java.util.Date(day.date * 1000))
-    }
-
     Row(
         modifier = Modifier
             .padding(8.dp)
@@ -32,7 +28,7 @@ fun ForecastItem(day: DailyForecast) {
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = formattedDate)
+        Text(text = formatDayFromTimestamp(day.date))
         Text(text = "${day.temperature}°")
         AsyncImage(
             model = day.iconUrl,
